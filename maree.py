@@ -1,7 +1,8 @@
 try:
     import pandas as pd
     import matplotlib.pyplot as plt
-
+    import mplcursors as mpc
+    
     # URL of the data source
     url = "https://comune.venezia.it/sites/default/files/publicCPSM2/stazioni/temporeale/Piattaforma.html"
     url2 = "https://comune.venezia.it/sites/default/files/publicCPSM2/stazioni/temporeale/Punta_Salute.html"
@@ -19,26 +20,26 @@ try:
     w = data3.iloc[:, 1]
     
     # Plot the data on a line chart
-    plt.figure(figsize=(15, 12))
-    plt.plot(x, y, marker='.', linestyle='-', color='b')
-    plt.plot(x, z, marker='.', linestyle='-', color='c')
-    plt.plot(x, w, marker='.', linestyle='-', color='r')
-        
+    plt.figure(figsize=(12, 9))
+    plt.plot(x, y, marker='.', linestyle='-', color='b', label="Piattaforma CN")
+    plt.plot(x, z, marker='.', linestyle='-', color='c', label ="Punta salute")
+    plt.plot(x, w, marker='.', linestyle='-', color='r', label="Burano")
+    plt.axhline(y=0, color='black', linewidth=0.5)
+    plt.legend (ncol=3, mode="expand", loc="lower center")
+    #plt.text (0,0, data.iloc[-1:, 0], ha="center", va="center")
+    d=data.iloc[-1:,0].to_string(header=False, index=False)[-17:]
+    
     plt.xlabel('Data')
     plt.ylabel('Altezza sul livello del mare')
     
-    plt.title('Maree Laguna di Venezia')
+    plt.title('Maree Laguna di Venezia - Ultimo dato:'+d)
     plt.grid(False)
     plt.tight_layout()
-    #plt.xticks (rotation=45)
-    plt.xticks(ticks=x[::50], rotation=20)
-    plt.text(0.5,0.5, "Piattaforma CNR",fontsize=12, color='b')
-    plt.text(0.5,0.6, "Punta salute",fontsize=12, color='c')
-    plt.text(0.5,0.7, "Burano", fontsize=12, color='r')
-    
 
-    # Show the plot
-    plt.show()
+    plt.xticks(ticks=x[::50], rotation=0)
+    
+    mpc.cursor(hover=True)
+    plt.show()   
 
 except ImportError as e:
     print(f"ImportError: {e}")
