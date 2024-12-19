@@ -2,3 +2,4 @@ streamlit
 matplotlib
 pandas
 mplcursors
+lxml
