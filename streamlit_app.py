@@ -43,8 +43,9 @@ fig.update_layout(
     xaxis_title='Data',
     yaxis_title='Altezza sul livello del mare',
     legend=dict(orientation='v', yanchor="top", y=0.99, xanchor="left", x=0.01),
-    height=900,
-    width=1200
+    #height=900,
+    #width=1200,
+    autosize=True
 )
 
 # Display the plot in Streamlit
