@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
@@ -14,7 +15,7 @@ for url in urls:
     try:
         data_frames.append(pd.read_html(url)[0])
     except Exception as e:
-        print(f"Error reading {url}: {e}")
+        st.error(f"Error reading {url}: {e}")
 
 # Extract the first and second columns for x and y axes
 x = data_frames[0].iloc[:, 0]
@@ -34,7 +35,7 @@ fig.add_trace(go.Scatter(x=x, y=w, name='Burano', line=dict(color='red')))
 fig.add_shape(type='line', x0=x.min(), x1=x.max(), y0=0, y1=0, line=dict(color='black', width=0.5))
 
 # Extract the last date for the title
-d = data_frames[0].iloc[-1:, 0].to_string(header=False, index=False)[-17:]
+d = data_frames[0].iloc[-1, 0]
 
 # Update layout
 fig.update_layout(
@@ -46,5 +47,5 @@ fig.update_layout(
     width=1200
 )
 
-# Show the plot
-fig.show()
+# Display the plot in Streamlit
+st.plotly_chart(fig)
